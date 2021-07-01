@@ -30,10 +30,6 @@ OBJS = \
   $K/plic.o \
   $K/virtio_disk.o
 
-ifndef SELECTION
- SELECTION=SCFIFO
-endif
-
 # riscv64-unknown-elf- or riscv64-linux-gnu-
 # perhaps in /opt/riscv/bin
 #TOOLPREFIX = 
@@ -60,8 +56,7 @@ LD = $(TOOLPREFIX)ld
 OBJCOPY = $(TOOLPREFIX)objcopy
 OBJDUMP = $(TOOLPREFIX)objdump
 
-CFLAGS = -D SELECTION=$(SELECTION) -fno-pic -static -fno-builtin -fno-strict-aliasing -O2 -Wall -MD -ggdb  -Werror -fno-omit-frame-pointer
-CFLAGS += -Wall -Werror -O -fno-omit-frame-pointer -ggdb
+CFLAGS = -Wall -Werror -O -fno-omit-frame-pointer -ggdb
 CFLAGS += -MD
 CFLAGS += -mcmodel=medany
 CFLAGS += -ffreestanding -fno-common -nostdlib -mno-relax
@@ -137,8 +132,6 @@ UPROGS=\
 	$U/_grind\
 	$U/_wc\
 	$U/_zombie\
-	$U/_lazytests\
-	$U/_sanitytests\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
